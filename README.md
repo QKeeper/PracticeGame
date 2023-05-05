@@ -59,6 +59,6 @@
 - `Скорость передвижения`
 
 ## Классы
-- `Entity` `Player`
-- `Component` `HealthComponent` `MovementComponent` `TransformComponent` `WeaponComponent`
-- `MovementSystem`
+- `Entity.cs` `Player.cs`
+- `Component.cs` `HealthComponent.cs` `MovementComponent.cs` `TransformComponent.cs` `WeaponComponent.cs`
+- `MovementSystem.cs`
