@@ -12,8 +12,8 @@ namespace Monogame01
         public Player(float health)
         {
             this.AddComponent(new HealthComponent(health));
-
-            //Movement Script
         }
+        
+        //Movement Script
     }
 }
