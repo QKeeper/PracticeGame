@@ -59,6 +59,6 @@
 - `Скорость передвижения`
 
 ## Классы
-- `Entity.cs` `Player.cs`
-- `Component.cs` `HealthComponent.cs` `MovementComponent.cs` `TransformComponent.cs` `WeaponComponent.cs`
+- [Entity](https://github.com/QKeeper/PracticeGame/blob/main/Entity.cs) [Player.cs](https://github.com/QKeeper/PracticeGame/blob/main/Player.cs)
+- [Component](https://github.com/QKeeper/PracticeGame/blob/main/Component.cs) [HealthComponent.cs](https://github.com/QKeeper/PracticeGame/blob/main/HealthComponent.cs) [MovementComponent.cs](https://github.com/QKeeper/PracticeGame/blob/main/MovementComponent.cs) [TransformComponent.cs](https://github.com/QKeeper/PracticeGame/blob/main/TransformComponent.cs) [WeaponComponent.cs](https://github.com/QKeeper/PracticeGame/blob/main/WeaponComponent.cs)
 - `MovementSystem.cs`
