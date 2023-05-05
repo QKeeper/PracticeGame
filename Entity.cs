@@ -19,11 +19,6 @@ namespace Monogame01
             component.entity = this;
         }
 
-        public void RemoveComponent(Component component)
-        {
-            components.Remove(component);
-        }
-
         public T GetComponent<T>() where T : Component
         {
             foreach (Component component in components)
