@@ -23,5 +23,17 @@ namespace Monogame01
         {
             components.Remove(component);
         }
+
+        public T GetComponent<T>() where T : Component
+        {
+            foreach (Component component in components)
+            {
+                if (component.GetType().Equals(typeof(T)))
+                {
+                    return (T)component;
+                }
+            }
+            return null;
+        }
     }
 }
