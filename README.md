@@ -57,3 +57,8 @@
 - `Дальность атаки`
 - `Площадь атаки`
 - `Скорость передвижения`
+
+## Классы
+- `Entity` `Player`
+- `Component` `HealthComponent` `MovementComponent` `TransformComponent` `WeaponComponent`
+- `MovementSystem`
