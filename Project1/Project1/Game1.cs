@@ -13,7 +13,7 @@ namespace Project1
     {
         internal static Vector2 ScreenSize = new(1920, 1080);
 
-        private GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
         internal static SpriteFont Berlin32Font;
