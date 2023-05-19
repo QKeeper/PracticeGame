@@ -11,7 +11,7 @@ namespace Project1
 {
     public class Game1 : Game
     {
-        internal static Vector2 ScreenSize = new(2560, 1080);
+        internal static Vector2 ScreenSize = new(1920, 1080);
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -53,7 +53,7 @@ namespace Project1
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _graphics.IsFullScreen = false;
+            _graphics.IsFullScreen = true;
             _graphics.PreferredBackBufferWidth = (int)ScreenSize.X;
             _graphics.PreferredBackBufferHeight = (int)ScreenSize.Y;
             _graphics.ApplyChanges();
