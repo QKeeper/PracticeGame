@@ -75,9 +75,7 @@ namespace Project1
             BiomeSystem.RandomizeBiome();
 
             Entities.Add(new Player() { position = ScreenSize / 2 });
-            Entities.Add(new Gnoll() { position = ScreenSize / 2 + new Vector2(256, 0) });
-            Entities.Add(new Gnoll() { position = ScreenSize / 2 + new Vector2(512, 0) });
-            // Systems.Add(new SpawnSystem(5f));
+            Systems.Add(new SpawnSystem(5f));
 
             base.Initialize();
         }
