@@ -21,11 +21,10 @@ namespace Project1
         internal Gnoll()
         {
             sprite = Game1.GnollSprite;
-            shadow = Game1.ShadowE7;
+            shadow = Game1.ShadowR8;
             colliderRadius = sprite.Width / 2.5f;
 
-            maxHealth = 10;
-            health = maxHealth;
+            maxHealth = health = 2;
             movementSpeed = 250;
         }
 
@@ -46,35 +45,23 @@ namespace Project1
             spriteEffects = direction.X > 0 ? SpriteEffects.None : (direction.X < 0 ? SpriteEffects.FlipHorizontally : spriteEffects);
             spriteBatch.Draw(sprite, position, null, DefineColor(), rotation, Center(sprite), 1f, spriteEffects, 0f);
 
-            spriteBatch.DrawString(Game1.Berlin32Font, "Health: " + health + "/" + maxHealth, new Vector2(position.X - sprite.Width / 2, position.Y - sprite.Height / 2 - 16), Color.White);
-        }
-
-        internal override void Damage(float amount)
-        {
-            health -= amount;
-
-            if (health <= 0)
-            {
-                Destroy();
-            }
+            // spriteBatch.DrawString(Game1.Berlin32Font, "Health: " + health + "/" + maxHealth, new Vector2(position.X - sprite.Width / 2, position.Y - sprite.Height / 2 - 16), Color.White);
         }
 
         internal void Movement(GameTime gameTime)
         {
             if (knockback.time > 0) return;
 
-            foreach (Entity target in Game1.Entities.ToList())
-                if (target is Player)
-                {
-                    direction = Vector2.Normalize(target.position - position);
-                    rotation = MathF.Sin(time * 14) / 9;
-                    break;
-                }
-                else
-                {
-                    direction = Vector2.Zero;
-                    rotation = 0;
-                }
+            if (Game1.Player.health > 0)
+            {
+                direction = Vector2.Normalize(Game1.Player.position - position);
+                rotation = MathF.Sin(time * 14) / 9;
+            }
+            else
+            {
+                direction = Vector2.Zero;
+                rotation = 0;
+            }
 
             position += direction * movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -102,6 +89,12 @@ namespace Project1
                 Knockback(position - entity.position, 175f, 0.25f);
                 Game1.HitSound.Play();
             }
+        }
+
+        internal override void Destroy()
+        {
+            DropLoot(position, new Random().Next(5) + 1);
+            base.Destroy();
         }
 
     }

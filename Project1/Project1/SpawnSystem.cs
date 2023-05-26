@@ -22,6 +22,8 @@ namespace Project1
 
         internal override void Update(GameTime gameTime)
         {
+            if (Game1.Player == null || Game1.Player.health <= 0) return;
+
             if (timer > 0f)
             {
                 timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;

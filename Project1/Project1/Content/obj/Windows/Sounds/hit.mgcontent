@@ -3,7 +3,7 @@
   <SourceFile>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sounds/hit.wav</SourceFile>
   <SourceTime>2023-05-19T09:52:28.8955885+05:00</SourceTime>
   <DestFile>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/bin/Windows/Sounds/hit.xnb</DestFile>
-  <DestTime>2023-05-19T10:43:57.7386452+05:00</DestTime>
+  <DestTime>2023-05-21T04:19:38.359699+05:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2022-07-26T16:44:56+05:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>

@@ -4,6 +4,7 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e8.png</File>
     <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/circle.png</File>
     <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Fonts/BerlinMain.spritefont</File>
     <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Fonts/consolas_bold.spritefont</File>
@@ -23,32 +24,10 @@
     <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e5.png</File>
     <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e6.png</File>
     <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e7.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e8.png</File>
     <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/UI/extraHeart.png</File>
     <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/UI/heart.png</File>
   </SourceFiles>
   <DestFiles>
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>
 </SourceFileCollection>

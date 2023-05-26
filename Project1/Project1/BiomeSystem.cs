@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project1
 {
-    internal class BiomeSystem : SystemComponent
+    internal static class BiomeSystem
     {
         private static Biome CurrentBiome = Biome.Dungeon;
 

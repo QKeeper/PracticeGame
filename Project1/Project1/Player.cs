@@ -20,11 +20,11 @@ namespace Project1
 {
     internal class Player : Entity
     {
-        internal int health = 5;
-        internal int extraHealth = 1;
-        internal float movementSpeed = 300f;
+        internal int health = 3;
+        internal int extraHealth = 0;
+        internal int experience = 0;
 
-        internal Item weapon = new();
+        internal Weapon weapon = new();
 
         private Vector2 input = Vector2.Zero;
         private Vector2 acceleratedInput = Vector2.Zero;
@@ -38,8 +38,9 @@ namespace Project1
         internal Player()
         {
             sprite = Game1.PlayerSprite;
-            shadow = Game1.ShadowE8;
             colliderRadius = sprite.Width / 2.5f;
+
+            movementSpeed = 300f;
         }
 
         internal override void Update(GameTime gameTime)
@@ -62,7 +63,6 @@ namespace Project1
             for (int i = 0; i < health + extraHealth; i++)
                 if (i < health) spriteBatch.Draw(Game1.HeartSprite, new Vector2(16 + (8 + Game1.HeartSprite.Width) * i, 16), Color.White);
                 else spriteBatch.Draw(Game1.ExtraHeartSprite, new Vector2(16 + (8 + Game1.HeartSprite.Width) * i, 16), Color.White);
-
         }
 
         internal void Movement(GameTime gameTime)
@@ -84,8 +84,8 @@ namespace Project1
             if (Mouse.GetState().LeftButton != ButtonState.Pressed) return;
 
             Vector2 mousePosition = new(Mouse.GetState().X, Mouse.GetState().Y);
-            List<Entity> possibleTargets = new();
-            Entity target = null;
+            List<Enemy> possibleTargets = new();
+            Enemy target = null;
 
             foreach (Entity entity in Game1.Entities.ToList())
             {
@@ -98,15 +98,17 @@ namespace Project1
 
                 if ((entity as Enemy).health <= 0) continue;
 
-                possibleTargets.Add(target = entity);
-                foreach (Entity _entity in possibleTargets)
-                    if (Vector2.Distance(position, _entity.position) < Vector2.Distance(position, target.position))
-                        target = _entity;
+                possibleTargets.Add(target = entity as Enemy);
             }
 
-            if (hitDelay <= 0 && target is Enemy)
+            if (hitDelay <= 0)
             {
-                (target as Enemy).Damage(weapon.damage);
+                foreach (Enemy entity in possibleTargets)
+                    if (Vector2.Distance(mousePosition, entity.position) < Vector2.Distance(position, target.position))
+                        target = entity;
+                if (target == null) return;
+
+                target.Damage(weapon.damage);
                 target.Knockback(target.position - position, 100f, .2f);
                 hitDelay = 1 / weapon.attackRate;
                 Game1.HitSound.Play();

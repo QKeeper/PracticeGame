@@ -4,35 +4,25 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/circle.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Fonts/BerlinMain.spritefont</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Fonts/consolas_bold.spritefont</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Fonts/consolas_regular.spritefont</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sounds/hit.wav</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/background_test.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/backgroundtest2.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Entities/Gnoll.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Entities/Goo.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Entities/Player.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Entities/Rat.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/floor_bricks.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e1.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e2.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e3.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e4.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e5.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e6.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e7.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/Other/e8.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/UI/extraHeart.png</File>
-    <File>C:/Users/Professional/Documents/GitHub/PracticeGame/Project1/Project1/Content/Sprites/UI/heart.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Fonts/consolasBig.spritefont</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Fonts/consolasMedium.spritefont</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Fonts/consolasSmall.spritefont</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sounds/hit.wav</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sounds/notification.wav</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Backgrounds/background.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/Gnoll.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/Goo.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/Player.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/Rat.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/blackSquare.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/experience-orb1.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/experience-orb2.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/experience-orb3.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/r8.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/UI/extraHeart.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/UI/heart.png</File>
   </SourceFiles>
   <DestFiles>
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

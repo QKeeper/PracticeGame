@@ -12,9 +12,10 @@ namespace Project1
     internal class Entity
     {
         internal Texture2D sprite;
-        internal Texture2D shadow;
+        internal Texture2D shadow = Game1.ShadowR8;
         internal Vector2 position;
         internal float colliderRadius = 16;
+        internal float movementSpeed = 0;
         internal float time = 0f;
 
         internal (Vector2 direction, float force, float time) knockback;
@@ -23,7 +24,7 @@ namespace Project1
         internal virtual void Update(GameTime gameTime) { }
         internal virtual void Draw(SpriteBatch spriteBatch) { }
 
-        internal void Destroy()
+        internal virtual void Destroy()
         {
             Game1.Entities.Remove(this);
         }
@@ -35,7 +36,7 @@ namespace Project1
             knockback.force = force;
         }
 
-        internal void Knockback(GameTime gameTime)
+        internal virtual void Knockback(GameTime gameTime)
         {
             if (knockback.time <= 0) return;
 
@@ -46,6 +47,25 @@ namespace Project1
         internal void DrawShadow(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(shadow, new Rectangle((int)position.X, (int)position.Y + sprite.Height / 2, (int)(sprite.Width * .85f), sprite.Height / 3), null, new Color(Color.Black, 128), 0f, Center(shadow), SpriteEffects.None, 0f);
+        }
+
+        internal List<Entity> Collide(GameTime gameTime)
+        {
+            var collidedEntities = new List<Entity>();
+
+            var entities = Game1.Entities.ToList();
+            entities.Remove(this);
+            foreach (Entity entity in entities)
+            {
+                if (Vector2.Distance(position, entity.position) > colliderRadius + entity.colliderRadius) continue;
+                collidedEntities.Add(entity);
+                while (Vector2.Distance(position, entity.position) < colliderRadius + entity.colliderRadius)
+                {
+                    position += Vector2.Normalize(position - entity.position) * movementSpeed * .01f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                    entity.position += Vector2.Normalize(entity.position - position) * entity.movementSpeed * .01f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+            return collidedEntities;
         }
 
     }

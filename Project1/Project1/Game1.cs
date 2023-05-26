@@ -6,45 +6,53 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Project1
 {
     public class Game1 : Game
     {
-        internal static Vector2 ScreenSize = new(1920, 1080);
+        internal static Vector2 ScreenSize = new(640, 480);
 
         private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        internal static SpriteFont Berlin32Font;
-        internal static SpriteFont ConsolasRegular;
-        internal static SpriteFont ConsolasBold;
+        // Fonts
+        internal static SpriteFont ConsolasBigFont;
+        internal static SpriteFont ConsolasMediumFont;
+        internal static SpriteFont ConsolasSmallFont;
 
+        // Backgrounds
         internal static Texture2D BackgroundImage;
-        internal static Texture2D BackgroundTestImage;
 
-        internal static Texture2D CircleSprite;
+        // UI
         internal static Texture2D HeartSprite;
         internal static Texture2D ExtraHeartSprite;
 
-        internal static Texture2D ShadowE1;
-        internal static Texture2D ShadowE2;
-        internal static Texture2D ShadowE3;
-        internal static Texture2D ShadowE4;
-        internal static Texture2D ShadowE5;
-        internal static Texture2D ShadowE6;
-        internal static Texture2D ShadowE7;
-        internal static Texture2D ShadowE8;
+        // Others
+        internal static Texture2D ShadowR8;
+        internal static Texture2D BlackSquareSprite;
+        internal static Texture2D ExperienceOrb1;
+        internal static Texture2D ExperienceOrb2;
+        internal static Texture2D ExperienceOrb3;
 
+        // Entities
         internal static Texture2D PlayerSprite;
         internal static Texture2D GooSprite;
         internal static Texture2D GnollSprite;
         internal static Texture2D RatSprite;
 
+        // Sounds
         internal static SoundEffect HitSound;
+        internal static SoundEffect NotifcationSound;
 
+        // Collections
         internal static List<Entity> Entities = new();
         internal static List<SystemComponent> Systems = new();
+        internal static List<Notification> Notifications = new();
+
+        internal static Player Player;
 
         internal float TimerDebug = 0f;
 
@@ -53,7 +61,8 @@ namespace Project1
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            _graphics.IsFullScreen = true;
+            _graphics.IsFullScreen = false;
+            ScreenSize = new(1920, 1080);
             _graphics.PreferredBackBufferWidth = (int)ScreenSize.X;
             _graphics.PreferredBackBufferHeight = (int)ScreenSize.Y;
             _graphics.ApplyChanges();
@@ -65,10 +74,10 @@ namespace Project1
 
             BiomeSystem.RandomizeBiome();
 
-            Entities.Add(new Player() { position = new(ScreenSize.X / 2, ScreenSize.Y / 2) });
-            //Entities.Add(new Rat() { position = new(1000, 200) });
-
-            Systems.Add(new SpawnSystem(5f));
+            Entities.Add(new Player() { position = ScreenSize / 2 });
+            Entities.Add(new Gnoll() { position = ScreenSize / 2 + new Vector2(256, 0) });
+            Entities.Add(new Gnoll() { position = ScreenSize / 2 + new Vector2(512, 0) });
+            // Systems.Add(new SpawnSystem(5f));
 
             base.Initialize();
         }
@@ -77,28 +86,30 @@ namespace Project1
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Berlin32Font = Content.Load<SpriteFont>("Fonts/BerlinMain");
-            ConsolasRegular = Content.Load<SpriteFont>("Fonts/consolas_regular");
-            ConsolasBold = Content.Load<SpriteFont>("Fonts/consolas_bold");
+            // Fonts
+            ConsolasBigFont = Content.Load<SpriteFont>("Fonts/consolasBig");
+            ConsolasMediumFont = Content.Load<SpriteFont>("Fonts/consolasMedium");
+            ConsolasSmallFont = Content.Load<SpriteFont>("Fonts/consolasSmall");
 
+            // Sounds
             HitSound = Content.Load<SoundEffect>("Sounds/hit");
+            NotifcationSound = Content.Load<SoundEffect>("Sounds/notification");
 
-            BackgroundImage = Content.Load<Texture2D>("Sprites/floor_bricks");
-            BackgroundTestImage = Content.Load<Texture2D>("Sprites/backgroundtest2");
+            // Backgrounds
+            BackgroundImage = Content.Load<Texture2D>("Sprites/Backgrounds/background");
 
-            CircleSprite = Content.Load<Texture2D>("circle");
+            // UI
             HeartSprite = Content.Load<Texture2D>("Sprites/UI/heart");
             ExtraHeartSprite = Content.Load<Texture2D>("Sprites/UI/extraHeart");
 
-            ShadowE1 = Content.Load<Texture2D>("Sprites/Other/e1");
-            ShadowE2 = Content.Load<Texture2D>("Sprites/Other/e2");
-            ShadowE3 = Content.Load<Texture2D>("Sprites/Other/e3");
-            ShadowE4 = Content.Load<Texture2D>("Sprites/Other/e4");
-            ShadowE5 = Content.Load<Texture2D>("Sprites/Other/e5");
-            ShadowE6 = Content.Load<Texture2D>("Sprites/Other/e6");
-            ShadowE7 = Content.Load<Texture2D>("Sprites/Other/e7");
-            ShadowE8 = Content.Load<Texture2D>("Sprites/Other/e8");
+            // Other
+            ShadowR8 = Content.Load<Texture2D>("Sprites/Other/r8");
+            BlackSquareSprite = Content.Load<Texture2D>("Sprites/Other/blackSquare");
+            ExperienceOrb1 = Content.Load<Texture2D>("Sprites/Other/experience-orb1");
+            ExperienceOrb2 = Content.Load<Texture2D>("Sprites/Other/experience-orb2");
+            ExperienceOrb3 = Content.Load<Texture2D>("Sprites/Other/experience-orb3");
 
+            // Entities
             PlayerSprite = Content.Load<Texture2D>("Sprites/Entities/Player");
             GooSprite = Content.Load<Texture2D>("Sprites/Entities/Goo");
             GnollSprite = Content.Load<Texture2D>("Sprites/Entities/Gnoll");
@@ -114,7 +125,13 @@ namespace Project1
                 system.Update(gameTime);
 
             foreach (Entity entity in Entities.ToList())
+            {
+                if (entity is Player) Player = entity as Player;
+
                 entity.Update(gameTime);
+            }
+
+            if (Notifications.Count > 0) Notifications[0].Update(gameTime);
 
             TimerDebug += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -128,27 +145,20 @@ namespace Project1
             _spriteBatch.Begin();
 
             // Draw Background
-            Texture2D background = BackgroundTestImage;
-            for (var i = 0; i < _graphics.PreferredBackBufferWidth / BackgroundImage.Width; i++)
-                for (var j = 0; j < _graphics.PreferredBackBufferHeight / BackgroundImage.Height + 1; j++)
-                    _spriteBatch.Draw(background, new Vector2(background.Width * i, background.Height * j), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            _spriteBatch.Draw(BackgroundImage, new(0, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
             // Draw each entity
-            var entitiesListDebug = "- Entities List -\n";
+            var entListDebug = "Total entities: " + Entities.Count + "\n";
             foreach (var entity in Entities.ToList())
             {
                 entity.Draw(_spriteBatch);
-                entitiesListDebug += entity.GetType() + " | " + Vector2.Round(entity.position) + "\n";
+                entListDebug += entity.GetType().ToString().Split('.')[1] + " " + MathF.Round(entity.position.X) + " " + MathF.Round(entity.position.Y) + "\n";
             }
-            _spriteBatch.DrawString(Berlin32Font, entitiesListDebug, new(16, 196), Color.White);
+            // _spriteBatch.DrawString(ConsolasSmallFont, entListDebug, new Vector2(17, 65), Color.Violet);
+            // _spriteBatch.DrawString(ConsolasSmallFont, entListDebug, new Vector2(16, 64), Color.White);
 
-            // Draw info for debugging
-            string text = "";
-            text += "\nResolution: " + _graphics.PreferredBackBufferWidth + "x" + _graphics.PreferredBackBufferHeight;
-            text += "\nEntities count: " + Entities.Count;
-            text += "\nSystems count: " + Systems.Count;
-            text += "\nElapsed time: " + MathF.Round(TimerDebug) + " seconds";
-            _spriteBatch.DrawString(Berlin32Font, text, new(16, 64), Color.White);
+            // Draw notifications
+            if (Notifications.Count > 0) Notifications[0].Draw(_spriteBatch);
 
             _spriteBatch.End();
 

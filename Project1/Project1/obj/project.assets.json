@@ -7537,11 +7537,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Professional\\Documents\\GitHub\\PracticeGame\\Project1\\Project1\\Project1.csproj",
+      "projectUniqueName": "C:\\Users\\Professional\\source\\repos\\Project1\\Project1\\Project1.csproj",
       "projectName": "Project1",
-      "projectPath": "C:\\Users\\Professional\\Documents\\GitHub\\PracticeGame\\Project1\\Project1\\Project1.csproj",
+      "projectPath": "C:\\Users\\Professional\\source\\repos\\Project1\\Project1\\Project1.csproj",
       "packagesPath": "C:\\Users\\Professional\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Professional\\Documents\\GitHub\\PracticeGame\\Project1\\Project1\\obj\\",
+      "outputPath": "C:\\Users\\Professional\\source\\repos\\Project1\\Project1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Professional\\AppData\\Roaming\\NuGet\\NuGet.Config",
