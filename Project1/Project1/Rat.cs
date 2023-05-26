@@ -27,7 +27,7 @@ namespace Project1
             shadow = Game1.ShadowR8;
             colliderRadius = sprite.Width / 2.5f;
 
-            maxHealth = health = 2;
+            maxHealth = health = 3;
 
             movementSpeed = 450f;
         }
@@ -63,7 +63,8 @@ namespace Project1
 
         internal override void Destroy()
         {
-            DropLoot(position, 1);
+            Random random = new();
+            DropLoot(position, random.Next(2) + 1);
             base.Destroy();
         }
 

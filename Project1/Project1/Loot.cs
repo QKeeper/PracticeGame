@@ -12,7 +12,7 @@ namespace Project1
     {
         internal Loot(Type type)
         {
-            movementSpeed = 5f;
+            movementSpeed = 500f;
 
             Random random = new();
             var expSpriteList = new List<Texture2D> { Game1.ExperienceOrb1, Game1.ExperienceOrb2, Game1.ExperienceOrb3};
