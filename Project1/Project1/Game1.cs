@@ -32,29 +32,39 @@ namespace Project1
 
         // Others
         internal static Texture2D ShadowR8;
+        internal static Texture2D CircleSprite;
         internal static Texture2D BlackSquareSprite;
+        internal static Texture2D WhiteSquareSprite;
         internal static Texture2D ExperienceOrb1;
         internal static Texture2D ExperienceOrb2;
         internal static Texture2D ExperienceOrb3;
+        internal static Texture2D CoinSprite;
+        internal static Texture2D CellSprite;
 
         // Entities
+        internal static Texture2D GhostSprite;
         internal static Texture2D PlayerSprite;
         internal static Texture2D GooSprite;
         internal static Texture2D GnollSprite;
         internal static Texture2D RatSprite;
+        internal static Texture2D RatKingSprite;
+        internal static Texture2D AnvilSprite;
+        internal static Texture2D DummySprite;
+
+        // Items
+        internal static Texture2D SwordSprite;
+        internal static Texture2D SpearSprite;
+
+        //Particles
+        internal static Texture2D HitParticle;
 
         // Sounds
         internal static SoundEffect HitSound;
         internal static SoundEffect NotifcationSound;
+        internal static SoundEffect ExperienceSound;
 
-        // Collections
-        internal static List<Entity> Entities = new();
-        internal static List<SystemComponent> Systems = new();
-        internal static List<Notification> Notifications = new();
-
+        internal static List<Entity> Entities;
         internal static Player Player;
-
-        internal float TimerDebug = 0f;
 
         public Game1()
         {
@@ -63,6 +73,7 @@ namespace Project1
             IsMouseVisible = true;
             _graphics.IsFullScreen = false;
             // ScreenSize = new(1920, 1080);
+            // ScreenSize = new(2560, 1080);
             _graphics.PreferredBackBufferWidth = (int)ScreenSize.X;
             _graphics.PreferredBackBufferHeight = (int)ScreenSize.Y;
             _graphics.ApplyChanges();
@@ -71,12 +82,7 @@ namespace Project1
         protected override void Initialize()
         {
             LoadContent();
-
-            BiomeSystem.RandomizeBiome();
-
-            Entities.Add(new Player() { position = ScreenSize / 2 });
-            Systems.Add(new SpawnSystem(5f));
-
+            Manager.Initialize();
             base.Initialize();
         }
 
@@ -89,10 +95,6 @@ namespace Project1
             ConsolasMediumFont = Content.Load<SpriteFont>("Fonts/consolasMedium");
             ConsolasSmallFont = Content.Load<SpriteFont>("Fonts/consolasSmall");
 
-            // Sounds
-            HitSound = Content.Load<SoundEffect>("Sounds/hit");
-            NotifcationSound = Content.Load<SoundEffect>("Sounds/notification");
-
             // Backgrounds
             BackgroundImage = Content.Load<Texture2D>("Sprites/Backgrounds/background");
 
@@ -102,64 +104,51 @@ namespace Project1
 
             // Other
             ShadowR8 = Content.Load<Texture2D>("Sprites/Other/r8");
+            CircleSprite = Content.Load<Texture2D>("Sprites/Other/Circle");
             BlackSquareSprite = Content.Load<Texture2D>("Sprites/Other/blackSquare");
+            WhiteSquareSprite = Content.Load<Texture2D>("Sprites/Other/whiteSquare");
             ExperienceOrb1 = Content.Load<Texture2D>("Sprites/Other/experience-orb1");
             ExperienceOrb2 = Content.Load<Texture2D>("Sprites/Other/experience-orb2");
             ExperienceOrb3 = Content.Load<Texture2D>("Sprites/Other/experience-orb3");
+            CoinSprite = Content.Load<Texture2D>("Sprites/Other/coin");
+            CellSprite = Content.Load<Texture2D>("Sprites/Other/cell1");
 
             // Entities
+            GhostSprite = Content.Load<Texture2D>("Sprites/Entities/Ghost");
             PlayerSprite = Content.Load<Texture2D>("Sprites/Entities/Player");
             GooSprite = Content.Load<Texture2D>("Sprites/Entities/Goo");
             GnollSprite = Content.Load<Texture2D>("Sprites/Entities/Gnoll");
             RatSprite = Content.Load<Texture2D>("Sprites/Entities/Rat");
+            RatKingSprite = Content.Load<Texture2D>("Sprites/Entities/Rat-King");
+            AnvilSprite = Content.Load<Texture2D>("Sprites/Entities/Anvil");
+            DummySprite = Content.Load<Texture2D>("Sprites/Entities/Statue");
+
+            // Items
+            SwordSprite = Content.Load<Texture2D>("Sprites/Items/Sword");
+            SpearSprite = Content.Load<Texture2D>("Sprites/Items/Spear");
+
+            // Particles
+            HitParticle = Content.Load<Texture2D>("Sprites/Other/HitParticle");
+
+            // Sounds
+            HitSound = Content.Load<SoundEffect>("Sounds/hit");
+            NotifcationSound = Content.Load<SoundEffect>("Sounds/notification");
+            ExperienceSound = Content.Load<SoundEffect>("Sounds/experience");
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            foreach (SystemComponent system in Systems.ToList())
-                system.Update(gameTime);
-
-            foreach (Entity entity in Entities.ToList())
-            {
-                if (entity is Player) Player = entity as Player;
-
-                entity.Update(gameTime);
-            }
-
-            if (Notifications.Count > 0) Notifications[0].Update(gameTime);
-
-            TimerDebug += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             base.Update(gameTime);
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape)) Exit();
+            Manager.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            _spriteBatch.Begin();
-
-            // Draw Background
-            _spriteBatch.Draw(BackgroundImage, new(0, 0), null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-
-            // Draw each entity
-            var entListDebug = "Total entities: " + Entities.Count + "\n";
-            foreach (var entity in Entities.ToList())
-            {
-                entity.Draw(_spriteBatch);
-                entListDebug += entity.GetType().ToString().Split('.')[1] + " " + MathF.Round(entity.position.X) + " " + MathF.Round(entity.position.Y) + "\n";
-            }
-            // _spriteBatch.DrawString(ConsolasSmallFont, entListDebug, new Vector2(17, 65), Color.Violet);
-            // _spriteBatch.DrawString(ConsolasSmallFont, entListDebug, new Vector2(16, 64), Color.White);
-
-            // Draw notifications
-            if (Notifications.Count > 0) Notifications[0].Draw(_spriteBatch);
-
+            _spriteBatch.Begin(transformMatrix: Camera.Transform);
+            Manager.Draw(gameTime, _spriteBatch);
             _spriteBatch.End();
-
             base.Draw(gameTime);
         }
 

@@ -11,26 +11,25 @@ namespace Project1
 {
     internal class Gnoll : Enemy
     {
-        private Vector2 direction = Vector2.Zero;
-        private SpriteEffects spriteEffects;
-        private float rotation;
+        private Vector2 Direction = Vector2.Zero;
+        private SpriteEffects SpriteEffects;
+        private float Rotation;
 
-        private float hitDelayTimer = 0f;
-        private float hitDelay = .45f;
+        private float HitDelayTimer = 0f;
+        private float HitDelay = .45f;
 
         internal Gnoll()
         {
-            sprite = Game1.GnollSprite;
-            shadow = Game1.ShadowR8;
-            colliderRadius = sprite.Width / 2.5f;
+            Sprite = Game1.GnollSprite;
+            Shadow = Game1.ShadowR8;
 
-            maxHealth = health = 5;
-            movementSpeed = 250;
+            MaxHealth = Health = 4f + 2.6f * (Manager.CurrentRoom - 1);
+            MovementSpeed = 250;
         }
 
         internal override void Update(GameTime gameTime)
         {
-            time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            base.Update(gameTime);
 
             Collide(gameTime);
             Knockback(gameTime);
@@ -42,36 +41,51 @@ namespace Project1
         {
             DrawShadow(spriteBatch);
 
-            spriteEffects = direction.X > 0 ? SpriteEffects.None : (direction.X < 0 ? SpriteEffects.FlipHorizontally : spriteEffects);
-            spriteBatch.Draw(sprite, position, null, DefineColor(), rotation, Center(sprite), 1f, spriteEffects, 0f);
+            SpriteEffects = Direction.X > 0 ? SpriteEffects.None : (Direction.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects);
+            spriteBatch.Draw(Sprite, Position, null, DefineColor(), Rotation, Center(Sprite), 1f, SpriteEffects, 0f);
 
-            // spriteBatch.DrawString(Game1.Berlin32Font, "Health: " + health + "/" + maxHealth, new Vector2(position.X - sprite.Width / 2, position.Y - sprite.Height / 2 - 16), Color.White);
+            var margin = 4;
+            var padding = 2;
+            var barWidth = 3;
+            spriteBatch.Draw(Game1.BlackSquareSprite, new Rectangle((int)Position.X - Sprite.Width / 2 - padding, (int)Position.Y + Sprite.Height / 2 + margin - padding, Sprite.Width + padding * 2, barWidth + padding * 2), new Color(Color.Black, 170));
+            spriteBatch.Draw(Game1.WhiteSquareSprite, new Rectangle((int)Position.X - Sprite.Width / 2, (int)Position.Y + Sprite.Height / 2 + margin, (int)Lerp(0, Sprite.Width, Health / (MaxHealth)), barWidth), new Color(255, 77, 77));
+        }
+
+        internal override void Destroy()
+        {
+            if (new Random().Next(100) > 50) SpawnSystem.SpawnEnemy(new Rat());
+
+            Loot.Drop(Position, xp: new Random().Next(0, 4), coins: new Random().Next(1, 4));
+            Ghost.Create(Position);
+
+            Statistics.DefeatedCreatures++;
+            base.Destroy();
         }
 
         internal void Movement(GameTime gameTime)
         {
             if (knockback.time > 0) return;
 
-            if (Game1.Player.health > 0)
+            if (Game1.Player.Health > 0)
             {
-                direction = Vector2.Normalize(Game1.Player.position - position);
-                rotation = MathF.Sin(time * 14) / 9;
+                Direction = Vector2.Normalize(Game1.Player.Position - Position);
+                Rotation = MathF.Sin(Time * 14) / 9;
             }
             else
             {
-                direction = Vector2.Zero;
-                rotation = 0;
+                Direction = Vector2.Zero;
+                Rotation = 0;
             }
 
-            position += direction * movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Position += Direction * MovementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
         }
 
         internal void HitPlayer(GameTime gameTime)
         {
-            if (hitDelayTimer > 0)
+            if (HitDelayTimer > 0)
             {
-                hitDelayTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                HitDelayTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                 return;
             }
 
@@ -80,21 +94,17 @@ namespace Project1
             foreach (Entity entity in Game1.Entities.ToList())
             {
                 if (entity is not Player) continue;
-                if (Vector2.Distance(position, entity.position) > sprite.Width) continue;
+                if (Vector2.Distance(Position, entity.Position) > ColliderRadius + entity.ColliderRadius) continue;
                 if (entity.knockback.time > 0) continue;
 
                 (entity as Player).Damage(1);
-                hitDelayTimer = hitDelay;
-                entity.Knockback(entity.position - position, 175f, 0.2f);
-                Knockback(position - entity.position, 175f, 0.25f);
+                HitDelayTimer = HitDelay;
+                entity.Knockback(entity.Position - Position, 175f, 0.2f);
+                Knockback(Position - entity.Position, 175f, 0.25f);
+                Particle.Create(Game1.HitParticle, Game1.Player.Position, new Random().Next(10, 20), new Color(170, 103, 17), 200f, 2);
+                Game1.Entities.Add(new PopoutText(Game1.Player.Position, Game1.ConsolasBigFont, new Color(255, 159, 26), .9f, "-1"));
                 Game1.HitSound.Play();
             }
-        }
-
-        internal override void Destroy()
-        {
-            DropLoot(position, new Random().Next(3) + 1);
-            base.Destroy();
         }
 
     }

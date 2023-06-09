@@ -11,8 +11,10 @@ using System.Windows.Forms;
 
 namespace Project1
 {
-    internal class Notification : Entity
+    internal class Notification
     {
+        private static readonly List<Notification> List = new();
+
         internal string title;
         internal List<(string, Vector2)> descriptionStrings = new();
         internal Vector2 notificationSize;
@@ -21,6 +23,7 @@ namespace Project1
         internal bool flagPlaySound = true;
         internal bool flagReady = false;
         internal float opacity = 0;
+        internal float time = 0;
 
         internal readonly SoundEffect notificationSound = Game1.NotifcationSound;
         internal readonly int fadeTime = 1;
@@ -31,7 +34,15 @@ namespace Project1
         internal readonly Color shadowColor = Color.OrangeRed;
         internal readonly Vector2 shadowOffset = new(1, 1);
 
-        internal Notification(float time, string title, string description)
+        internal static void Add(Notification notification) => List.Add(notification);
+
+        internal static void Clear() => List.Clear();
+        
+        internal static void Update(GameTime gameTime) { if (List.Count > 0) List[0].UpdateElement(gameTime); }
+
+        internal static void Draw(SpriteBatch spriteBatch) { if (List.Count > 0) List[0].DrawElement(spriteBatch); }
+
+        internal Notification(string title, string description, float time = 2)
         {
             this.time = time;
             this.title = title;
@@ -43,7 +54,7 @@ namespace Project1
             string currentString = "";
             foreach (var word in description.Split(' '))
             {
-                if (currentString.Length + word.Length< stringMaxLength)
+                if (currentString.Length + word.Length < stringMaxLength)
                     currentString += word + " ";
                 else
                 {
@@ -60,13 +71,9 @@ namespace Project1
             descriptionStrings.Add((currentString, new(measureString.X, measureString.Y)));
         }
 
-        internal override void Update(GameTime gameTime)
+        internal void UpdateElement(GameTime gameTime)
         {
-            if (flagPlaySound)
-            {
-                notificationSound.Play();
-                flagPlaySound = false;
-            }
+            if (flagPlaySound) { notificationSound.Play(); flagPlaySound = false; }
 
             if (!flagReady)
             {
@@ -77,24 +84,30 @@ namespace Project1
             {
                 time -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                 if (time < 0) opacity -= 255 / fadeTime * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if (opacity < 0) Game1.Notifications.Remove(this);
+                if (opacity < 0) List.Remove(this);
             }
 
             opacity = Math.Clamp(opacity, 0, 255);
 
         }
 
-        internal override void Draw(SpriteBatch spriteBatch)
+        internal void DrawElement(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Game1.BlackSquareSprite, new Rectangle((int)(Game1.ScreenSize.X - notificationSize.X) / 2 - padding, 109 - padding, (int)notificationSize.X + padding * 2, (int)notificationSize.Y + stringSpacing + 32), new Color(Color.White, (int)(opacity / 255 * 100)));
+            spriteBatch.Draw(Game1.BlackSquareSprite, 
+                new Rectangle(
+                    (int)(Camera.Zero.X + (Game1.ScreenSize.X - notificationSize.X) / 2 - padding), 
+                    (int)Camera.Zero.Y + 109 - padding, 
+                    (int)notificationSize.X + padding * 2, 
+                    (int)notificationSize.Y + stringSpacing + padding * 2),
+                new Color(Color.White, (int)(opacity / 255 * 100)));
 
-            spriteBatch.DrawString(Game1.ConsolasMediumFont, title, new Vector2(Game1.ScreenSize.X / 2, 128) + shadowOffset - titleSize / 2, shadowColor);
-            spriteBatch.DrawString(Game1.ConsolasMediumFont, title, new Vector2(Game1.ScreenSize.X / 2, 128) - titleSize / 2, textColor);
+            spriteBatch.DrawString(Game1.ConsolasMediumFont, title, Camera.Zero + new Vector2(Game1.ScreenSize.X / 2, 128) + shadowOffset - titleSize / 2, shadowColor);
+            spriteBatch.DrawString(Game1.ConsolasMediumFont, title, Camera.Zero + new Vector2(Game1.ScreenSize.X / 2, 128) - titleSize / 2, textColor);
 
             for (var i = 0; i < descriptionStrings.Count; i++)
             {
-                spriteBatch.DrawString(Game1.ConsolasSmallFont, descriptionStrings[i].Item1, new Vector2(Game1.ScreenSize.X / 2 - descriptionStrings[i].Item2.X / 2, 128 + (descriptionStrings[i].Item2.Y + stringSpacing) * (i + 1)) + shadowOffset, shadowColor);
-                spriteBatch.DrawString(Game1.ConsolasSmallFont, descriptionStrings[i].Item1, new Vector2(Game1.ScreenSize.X / 2 - descriptionStrings[i].Item2.X / 2, 128 + (descriptionStrings[i].Item2.Y + stringSpacing) * (i + 1)), textColor);
+                spriteBatch.DrawString(Game1.ConsolasSmallFont, descriptionStrings[i].Item1, Camera.Zero + new Vector2(Game1.ScreenSize.X / 2 - descriptionStrings[i].Item2.X / 2, 128 + (descriptionStrings[i].Item2.Y + stringSpacing) * (i + 1)) + shadowOffset, shadowColor);
+                spriteBatch.DrawString(Game1.ConsolasSmallFont, descriptionStrings[i].Item1, Camera.Zero + new Vector2(Game1.ScreenSize.X / 2 - descriptionStrings[i].Item2.X / 2, 128 + (descriptionStrings[i].Item2.Y + stringSpacing) * (i + 1)), textColor);
             }
         }
     }

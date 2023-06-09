@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,32 +7,40 @@ using System.Threading.Tasks;
 
 namespace Project1
 {
-    internal static class BiomeSystem
+    internal static class Biome
     {
-        private static Biome CurrentBiome = Biome.Dungeon;
+        private static BiomeType CurrentBiome = BiomeType.Dungeon;
 
-        internal enum Biome
+        internal enum BiomeType
         {
             Dungeon,
         }
 
-        internal static Biome GetBiome => CurrentBiome;
+        internal static BiomeType GetBiome => CurrentBiome;
 
-        internal static void SetBiome(Biome biome)
+        internal static void Set(BiomeType biome)
         {
             CurrentBiome = biome;
         }
 
-        internal static Biome RandomizeBiome()
+        internal static BiomeType Randomize()
         {
-            Array values = Enum.GetValues(typeof(Biome));
+            Array values = Enum.GetValues(typeof(BiomeType));
             Random random = new();
-            return CurrentBiome = (Biome)values.GetValue(random.Next(values.Length));
+            return CurrentBiome = (BiomeType)values.GetValue(random.Next(values.Length));
+        }
+
+        internal static Texture2D GetBackground()
+        {
+            if (GetBiome == BiomeType.Dungeon)
+                return Game1.BackgroundImage;
+
+            return default;
         }
 
         internal static Entity[] GetEntities()
         {
-            if (GetBiome == Biome.Dungeon)
+            if (GetBiome == BiomeType.Dungeon)
                 return new Entity[] { new Gnoll(), new Rat() };
 
             return Array.Empty<Entity>();

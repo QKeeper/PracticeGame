@@ -10,31 +10,41 @@ using System.Windows.Forms;
 
 namespace Project1
 {
-    internal class SpawnSystem : SystemComponent
+    internal static class SpawnSystem
     {
-        internal float frequency = 1f;
-        private float timer = 0f;
-
-        internal SpawnSystem(float frequency)
+        internal static bool Active = false;
+        
+        private static float Frequency = 1f;
+        internal static void SetFrequency(float frequency)
         {
-            this.frequency = frequency;
+            if (frequency <= 0) throw new ArgumentOutOfRangeException("Частота спавна не может быть меньше или равна нулю");
+            Frequency = frequency;
         }
 
-        internal override void Update(GameTime gameTime)
+        private static float Timer = 0f;
+
+        internal static void Update(GameTime gameTime)
         {
-            if (Game1.Player == null || Game1.Player.health <= 0) return;
+            if (!Active) return;
+            if (Game1.Player == null || Game1.Player.Health <= 0) return;
+            if (Timer > 0f) { Timer -= (float)gameTime.ElapsedGameTime.TotalSeconds; return; }
 
-            if (timer > 0f)
-            {
-                timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                return;
-            }
+            Timer += Frequency;
 
-            timer += frequency;
+            SpawnEnemy();
+        }
 
-            var entity = BiomeSystem.GetEntity();
-            entity.position = RandomPoint(Game1.ScreenSize);
+        internal static void SpawnEnemy()
+        {
+            var entity = Biome.GetEntity();
+            entity.Position = Camera.Zero + RandomPoint(Game1.ScreenSize);
             Game1.Entities.Add(entity);
+        }
+
+        internal static void SpawnEnemy(Enemy enemy)
+        {
+            enemy.Position = Camera.Zero + RandomPoint(Game1.ScreenSize);
+            Game1.Entities.Add(enemy);
         }
 
         private static Vector2 RandomPoint(Vector2 area)

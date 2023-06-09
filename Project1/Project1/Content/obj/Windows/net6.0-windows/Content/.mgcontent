@@ -7,22 +7,50 @@
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Fonts/consolasBig.spritefont</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Fonts/consolasMedium.spritefont</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Fonts/consolasSmall.spritefont</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sounds/experience.wav</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sounds/hit.wav</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sounds/notification.wav</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Backgrounds/background.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/anvil.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/Ghost.png</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/Gnoll.png</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/Goo.png</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/Player.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/rat-king.png</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/Rat.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Entities/Statue.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Items/spear.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Items/sword.png</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/blackSquare.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/cell.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/cell1.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/cell2.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/circle.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/coin.png</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/experience-orb1.png</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/experience-orb2.png</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/experience-orb3.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/HitParticle.png</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/r8.png</File>
+    <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/Other/whiteSquare.png</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/UI/extraHeart.png</File>
     <File>C:/Users/Professional/source/repos/Project1/Project1/Content/Sprites/UI/heart.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

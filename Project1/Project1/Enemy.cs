@@ -12,39 +12,33 @@ namespace Project1
 {
     internal class Enemy : Entity
     {
-        internal float maxHealth = 10f;
-        internal float health = 10f;
+        internal float MaxHealth = 10f;
+        internal float Health = 10f;
 
         internal Enemy()
         {
-            sprite = Game1.GooSprite;
-            colliderRadius = sprite.Width / 2;
+            Sprite = Game1.GooSprite;
 
-            movementSpeed = 150f;
+            MovementSpeed = 150f;
         }
 
         internal virtual void Damage(float amount)
         {
-            health -= amount;
+            Health -= amount;
 
-            if (health <= 0) Destroy();
+            if (Health <= 0) Destroy();
         }
 
         internal override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             Collide(gameTime);
         }
 
         internal override void Draw(SpriteBatch spriteBatch)
         {
             DrawShadow(spriteBatch);
-            spriteBatch.Draw(sprite, position, null, Color.White, 0f, Center(sprite), 1f, SpriteEffects.None, 0f);
-        }
-
-        internal void DropLoot(Vector2 position, int experience)
-        {
-            for (var i = 0; i < experience; i++)
-                Game1.Entities.Add(new Loot(Loot.Type.exp) { position = position + new Vector2(i + 1, i + 1) * 8 });
+            spriteBatch.Draw(Sprite, Position, null, Color.White, 0f, Center(Sprite), 1f, SpriteEffects.None, 0f);
         }
 
     }
